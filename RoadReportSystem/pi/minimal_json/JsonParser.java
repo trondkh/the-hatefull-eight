@@ -1,4 +1,4 @@
-package json;
+package minimal_json;
 
 /*******************************************************************************
  * Copyright (c) 2013, 2016 EclipseSource.

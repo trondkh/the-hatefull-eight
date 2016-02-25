@@ -1,4 +1,4 @@
-package json;
+package minimal_json;
 
 /*******************************************************************************
  * Copyright (c) 2013, 2015 EclipseSource.
@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import json.JsonObject.Member;
+import minimal_json.JsonObject.Member;
 
 
 /**

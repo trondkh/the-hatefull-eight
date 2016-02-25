@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 
-import json.*;
+import minimal_json.*;
 
 public class Pi {
 	
@@ -34,14 +34,16 @@ public class Pi {
 		}
 		String[] strings = new String[3];
 		String str;
-		for(int i=0;i<10;i++)
+		for(int i=0;i<100;i++)
 		{
-			str = allTheLines.get(i);
+			str = Integer.toString(i) + " ";
+			str += allTheLines.get(i);
+			System.out.println(str);
 			strings = str.split(","); 
-			str = strings[0].split(":")[1];
+			str += strings[0].split(":")[1];
 			str += " at "; 
 			str += strings[1].split(":")[1];
-			System.out.println(str);
+//			System.out.println(str);
 		}
 	}
 	
