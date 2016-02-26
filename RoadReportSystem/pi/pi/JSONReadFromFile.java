@@ -10,8 +10,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import minimal_json.JsonArray;
- 
 /**
  * @author Crunchify.com
  */
@@ -51,7 +49,6 @@ public class JSONReadFromFile {
         al = new ArrayList<CarData>();
         ArrayList<String> allTheLines = new ArrayList<String>();
 		Reader r;
-		JsonArray items = new JsonArray();
 		try
 		{
 			r = new FileReader("./pi/pi/uptown-west.json");

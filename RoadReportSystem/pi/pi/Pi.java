@@ -2,11 +2,9 @@ package pi;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 
-import minimal_json.*;
 
 public class Pi {
 	
@@ -14,7 +12,6 @@ public class Pi {
 	{
 		ArrayList<String> allTheLines = new ArrayList<String>();
 		Reader r;
-		JsonArray items = new JsonArray();
 		try
 		{
 			r = new FileReader("./pi/pi/uptown-west.json");
@@ -24,8 +21,7 @@ public class Pi {
 			{
 				allTheLines.add(str);
 			}
-//			items = Json.parse(str).asArray();
-
+			br.close();
 			
 		}
 		catch(Exception e)
