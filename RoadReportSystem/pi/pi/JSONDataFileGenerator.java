@@ -12,8 +12,10 @@ public class JSONDataFileGenerator {
 		public static void main(String[] args) throws IOException {
 	 
 			JSONObject obj = new JSONObject();
-			obj.put("Name", "airbag");
-			obj.put("Value", true);
+			obj.put("timestamp", 0.0001);
+			obj.put("value", true);
+			obj.put("name", "airbag");
+			
 	 
 	 
 			// try-with-resources statement based on post comment below :)
