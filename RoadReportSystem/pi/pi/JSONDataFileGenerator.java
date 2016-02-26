@@ -15,7 +15,7 @@ public class JSONDataFileGenerator {
 			obj.put("timestamp", 0.000101);
 			obj.put("value", true);
 			obj.put("name", "airbag");
-			
+			//add the information you want
 	 
 	 
 			// try-with-resources statement based on post comment below :)
