@@ -38,48 +38,71 @@ public class JSONReadFromFile {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
        JSONReadFromFile f = new JSONReadFromFile();
-       f.jsonParser();
-       System.out.println(f.al.size());
-        
+       f.printFileAsCarData();
     }
     
-    public void jsonParser()
+    public void printFileAsCarData()
     {
-    	JSONParser parser = new JSONParser();
-        al = new ArrayList<CarData>();
-        ArrayList<String> allTheLines = new ArrayList<String>();
+    	ArrayList<String> jsonObjects = new ArrayList<String>();
+    	ArrayList<CarData> carDataObjects;
+    	readFile(jsonObjects);
+    	carDataObjects=json2CarData(jsonObjects);
+    	for(CarData cd:carDataObjects)
+    	{
+    		System.out.println(cd);
+    	}
+    }
+    
+    public ArrayList<CarData> json2CarData(ArrayList<String> al)
+    {
+    	ArrayList<CarData> carDatas = new ArrayList<CarData>();
+    	for(String s:al)
+    	{
+
+    		carDatas.add(jsonParser(s));
+    	}
+    	return carDatas;
+    }
+    
+    public void readFile(ArrayList<String> al)
+    {
 		Reader r;
 		try
 		{
-			r = new FileReader("./pi/pi/uptown-west.json");
+			r = new FileReader("./pi/pi/uptown-west_TEST.json");
 			BufferedReader br = new BufferedReader(r);
 			String str;
 			while((str = br.readLine())!=null)
 			{
-				allTheLines.add(str);
+				al.add(str);
 			}
+			br.close();
 			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		
+    	
+    }
+    
+    private CarData jsonParser(String str)
+    {
+    	JSONParser parser = new JSONParser();
+    	CarData cd = null;
         try {
- 
-            Object obj = parser.parse(new FileReader(
-                    "./pi/pi/uptown-west_TEST.json"));
- 
+        	Object obj = parser.parse(str);
             JSONObject jsonObject = (JSONObject) obj;
  
             String variableName = (String) jsonObject.get("name");
             long value = (long) jsonObject.get("value");
             double timestamp = (double) jsonObject.get("timestamp");
-            al.add(new CarData(timestamp,value,variableName));
+            cd = new CarData(timestamp,value,variableName);
 
  
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return cd;
     }
 }
