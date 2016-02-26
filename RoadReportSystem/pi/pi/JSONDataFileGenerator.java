@@ -12,7 +12,7 @@ public class JSONDataFileGenerator {
 		public static void main(String[] args) throws IOException {
 	 
 			JSONObject obj = new JSONObject();
-			obj.put("timestamp", 0.0001);
+			obj.put("timestamp", 0.000101);
 			obj.put("value", true);
 			obj.put("name", "airbag");
 			
