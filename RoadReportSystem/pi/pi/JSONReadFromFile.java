@@ -16,38 +16,54 @@ import org.json.simple.parser.JSONParser;
  
 public class JSONReadFromFile {
  
+	class CarDataValueHolder
+	{
+		Object test;
+		public CarDataValueHolder(Object o) {
+			this.test = o;
+		}
+	}
+
 	class CarData
     {
     	double time;
-    	long value;
+    	CarDataValueHolder value;
     	String variable;
-    	public CarData(double time, long value, String variable)
+    	public CarData(double time, CarDataValueHolder value, String variable)
     	{
     		this.time = time;
-    		this.value = value;
+    		this.value = new CarDataValueHolder(value.test);
     		this.variable = variable;
+    	}
+    	
+    	public long getTimeStamp()
+    	{
+    		// Time is returned as milliseconds as input data is given in seconds as 
+    		// double value.
+    		time*=1000;
+    		return (long)time;
     	}
     	public String toString()
     	{
-    		return Double.toString(time) + ": " + this.variable + " = " + Long.toString(this.value);
+    		return Long.toString(getTimeStamp()) + ": " + this.variable + " = " + this.value.test;
     	}
     }
 	
-	 ArrayList<CarData> al;
+	 ArrayList<CarData> carDataJsonObjects;
 	
-    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
        JSONReadFromFile f = new JSONReadFromFile();
        f.printFileAsCarData();
+       System.out.println("Total number of JSON objects parsed:");
+       System.out.println(f.carDataJsonObjects.size());
     }
     
     public void printFileAsCarData()
     {
     	ArrayList<String> jsonObjects = new ArrayList<String>();
-    	ArrayList<CarData> carDataObjects;
     	readFile(jsonObjects);
-    	carDataObjects=json2CarData(jsonObjects);
-    	for(CarData cd:carDataObjects)
+    	carDataJsonObjects=json2CarData(jsonObjects);
+    	for(CarData cd:carDataJsonObjects)
     	{
     		System.out.println(cd);
     	}
@@ -69,12 +85,15 @@ public class JSONReadFromFile {
 		Reader r;
 		try
 		{
-			r = new FileReader("./pi/pi/uptown-west_TEST.json");
+			r = new FileReader("./pi/pi/uptown-west.json");
 			BufferedReader br = new BufferedReader(r);
 			String str;
 			while((str = br.readLine())!=null)
 			{
-				al.add(str);
+				if(str.length()!=0)
+				{
+					al.add(str);
+				}
 			}
 			br.close();
 			
@@ -88,19 +107,32 @@ public class JSONReadFromFile {
     
     private CarData jsonParser(String str)
     {
-    	JSONParser parser = new JSONParser();
-    	CarData cd = null;
+		CarData cd = null;
         try {
+			if(str==null || str.length()==0)
+			{
+				String errorMsg = "String variable is invalid for jsonParser. Str=";
+				errorMsg+=str;
+
+				throw new IllegalStateException(errorMsg);
+			}
+			JSONParser parser = new JSONParser();
         	Object obj = parser.parse(str);
             JSONObject jsonObject = (JSONObject) obj;
  
             String variableName = (String) jsonObject.get("name");
-            long value = (long) jsonObject.get("value");
+            CarDataValueHolder value = new CarDataValueHolder((Object)jsonObject.get("value"));
             double timestamp = (double) jsonObject.get("timestamp");
             cd = new CarData(timestamp,value,variableName);
 
  
-        } catch (Exception e) {
+        } 
+        catch (IllegalStateException e)
+        {
+        	System.out.println(e);
+        }
+        catch (Exception e) {
+      		System.out.println("Error parsing: " + str);
             e.printStackTrace();
         }
         return cd;

@@ -12,9 +12,11 @@ public class JSONDataFileGenerator {
 		public static void main(String[] args) throws IOException {
 	 
 			JSONObject obj = new JSONObject();
-			obj.put("Name", "airbag");
-			obj.put("Value", true);
-	 
+			obj.put("timestamp", 0.000101);
+			obj.put("value", true);
+			obj.put("name", "airbag");
+			//add the information you want
+			
 	 
 			// try-with-resources statement based on post comment below :)
 			try (FileWriter file = new FileWriter("/Users/fredr/Documents/GitHub/the-hatefull-eight/RoadReportSystem/pi/pi/file1.txt")) {
