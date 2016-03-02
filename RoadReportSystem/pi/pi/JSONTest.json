@@ -1,32 +1,28 @@
-{"name":"vehicle_speed","value":0,"timestamp":1364309660.002000}
+{"name":"latitude","value":63.415116,"timestamp":1364309660.002000}
 
-{"name":"accelerator_pedal_position","value":0,"timestamp":1364309660.002000}
-{"name":"torque_at_transmission","value":5,"timestamp":1364309660.002000}
-{"name":"engine_speed","value":774,"timestamp":1364309660.002000}
-{"name":"accelerator_pedal_position","value":0,"timestamp":1364309660.006000}
-{"name":"torque_at_transmission","value":5,"timestamp":1364309660.006000}
+{"name":"longitude","value":10.411048,"timestamp":1364309660.002000}
 
-{"name":"engine_speed","value":774,"timestamp":1364309660.006000}
+{"name":"airbag","value":false,"timestamp":1364309660.002000}
+{"name":"anti_spin","value":false,"timestamp":1364309660.002000}
+{"name":"latitude","value":63.089786,"timestamp":1364309660.006000}
 
-{"name":"vehicle_speed","value":0,"timestamp":1364309660.010000}
-{"name":"accelerator_pedal_position","value":0,"timestamp":1364309660.010000}
+{"name":"longitude","value":10.387573,"timestamp":1364309660.006000}
 
-{"name":"engine_speed","value":774,"timestamp":1364309660.010000}
-
-{"name":"torque_at_transmission","value":5,"timestamp":1364309660.013000}
-
-{"name":"vehicle_speed","value":0,"timestamp":1364309660.015000}
-
-{"name":"accelerator_pedal_position","value":0,"timestamp":1364309660.018000}
-
-{"name":"engine_speed","value":774,"timestamp":1364309660.020000}
-
-{"name":"torque_at_transmission","value":4,"timestamp":1364309660.022000}
-
-{"name":"fuel_consumed_since_restart","value":0.177979,"timestamp":1364309660.028000}
-
-{"name":"odometer","value":13916.269531,"timestamp":1364309660.029000}
-
-{"name":"vehicle_speed","value":0,"timestamp":1364309660.030000}
-
-{"name":"accelerator_pedal_position","value":0,"timestamp":1364309660.032000}
+{"name":"airbag","value":false,"timestamp":1364309660.006000}
+{"name":"anti_spin","value":false,"timestamp":1364309660.006000}
+{"name":"latitude","value":62.566146,"timestamp":1364309660.010000}
+{"name":"longitude","value":10.315475,"timestamp":1364309660.010000}
+{"name":"airbag","value":false,"timestamp":1364309660.010000}
+{"name":"anti_spin","value":false,"timestamp":1364309660.010000}
+{"name":"latitude","value":62.566146,"timestamp":1364309660.013000}
+{"name":"longitude","value":10.315475,"timestamp":1364309660.013000}
+{"name":"airbag","value":false,"timestamp":1364309660.013000}
+{"name":"anti_spin","value":true,"timestamp":1364309660.013000}
+{"name":"latitude","value":62.324106,"timestamp":1364309660.015000}
+{"name":"longitude","value":10.046753,"timestamp":1364309660.015000}
+{"name":"airbag","value":false,"timestamp":1364309660.015000}
+{"name":"anti_spin","value":false,"timestamp":1364309660.015000}
+{"name":"latitude","value":61.595946,"timestamp":1364309660.018000}
+{"name":"longitude","value":10.409545,"timestamp":1364309660.018000}
+{"name":"airbag","value":true,"timestamp":1364309660.018000}
+{"name":"anti_spin","value":true,"timestamp":1364309660.018000}
