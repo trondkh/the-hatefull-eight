@@ -16,7 +16,6 @@ public class JSONDataFileGenerator {
 			obj.put("value", true);
 			obj.put("name", "airbag");
 			//add the information you want
-			
 	 
 			// try-with-resources statement based on post comment below :)
 			try (FileWriter file = new FileWriter("/Users/fredr/Documents/GitHub/the-hatefull-eight/RoadReportSystem/pi/pi/file1.txt")) {
