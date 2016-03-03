@@ -16,40 +16,9 @@ import org.json.simple.parser.JSONParser;
  
 public class JSONReadFromFile {
  
-	class CarDataValueHolder
-	{
-		Object test;
-		public CarDataValueHolder(Object o) {
-			this.test = o;
-		}
-	}
 
-	class CarData
-    {
-    	double time;
-    	CarDataValueHolder value;
-    	String variable;
-    	public CarData(double time, CarDataValueHolder value, String variable)
-    	{
-    		this.time = time;
-    		this.value = new CarDataValueHolder(value.test);
-    		this.variable = variable;
-    	}
-    	
-    	public long getTimeStamp()
-    	{
-    		// Time is returned as milliseconds as input data is given in seconds as 
-    		// double value.
-    		time*=1000;
-    		return (long)time;
-    	}
-    	public String toString()
-    	{
-    		return Long.toString(getTimeStamp()) + ": " + this.variable + " = " + this.value.test;
-    	}
-    }
 	
-	 ArrayList<CarData> carDataJsonObjects;
+	ArrayList<CarData> carDataJsonObjects;
 	
     public static void main(String[] args) {
        JSONReadFromFile f = new JSONReadFromFile();
@@ -107,7 +76,7 @@ public class JSONReadFromFile {
     	
     }
     
-    private CarData jsonParser(String str)
+    CarData jsonParser(String str)
     {
 		CarData cd = null;
         try {
