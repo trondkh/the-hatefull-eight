@@ -25,7 +25,6 @@ public class JSONRead {
        f.printFileAsCarData();
        System.out.println("Total number of JSON objects parsed:");
        System.out.println(f.carDataJsonObjects.size());
-       //System.out.println("hei");
     }
     
     public void printFileAsCarData()
@@ -35,24 +34,28 @@ public class JSONRead {
     	carDataJsonObjects=json2CarData(jsonObjects);
     	for(NewCarData cd:carDataJsonObjects)
     	{
-    		//System.out.println(cd.variable.equals("airbag"));  
-    		//System.out.println(cd.booleanValue == true);  
+    		//checks if the data is airbag and if it was activated
     		if(cd.variable.equals("airbag")){
     			if(cd.booleanValue == true){
     		    	System.out.println("airbag activated");
     			}
-    		}
-
+    			else {
+        			System.out.println("no activation");
+        		}
+       		}
+    		//checks if the data is anti-spin and if it was activated
     		else if(cd.variable.equals("anti_spin")){
     			if(cd.booleanValue == true){
     				System.out.println("antispin activated");
     			}
+    			else {
+        			System.out.println("no activation");
+        		}
     		}
     		else {
     			System.out.println("no activation");
     		}
     		System.out.println(cd);
-    		//System.out.println("hei");
     	}
     }
     
@@ -110,32 +113,26 @@ public class JSONRead {
             JSONObject jsonObject = (JSONObject) obj;
  
             String variableName = (String) jsonObject.get("name");
+            // Checks what kind of variable value should be stored in
+            	// here boolean
             if ((variableName.equals("airbag"))||(variableName.equals("anti_spin"))){
             	boolean value = (boolean)jsonObject.get("value");
             	double timestamp = (double) jsonObject.get("timestamp");
                 cd = new NewCarData(timestamp,value,variableName);
             }
+            	// here double
             else if ((variableName.equals( "longitude"))||(variableName.equals("latitude"))){
             	double value = (double)jsonObject.get("value");
             	double timestamp = (double) jsonObject.get("timestamp");
             	cd = new NewCarData(timestamp,value,variableName);
             }
             else {
-            	System.out.println(variableName);
-            	System.out.println(variableName == "longitude");
            
             	String errorMsg = "String name variable is invalid for jsonParser. Str=";
 				errorMsg+=str;
 
 				throw new IllegalStateException(errorMsg);
-            }
-            
-            
-	    
-
-	   	    
-	    
-           
+            }         
  	
         } 
         catch (IllegalStateException e)
