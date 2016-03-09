@@ -95,8 +95,20 @@ public class JSONReadFromFile {
             CarDataValueHolder value = new CarDataValueHolder((Object)jsonObject.get("value"));
             double timestamp = (double) jsonObject.get("timestamp");
             cd = new CarData(timestamp,value,variableName);
+            
+	    /*
 
- 
+	    får en feilmelding på CarDataValueHolder, mulig at denne klassen må endres. 
+	    
+	    if(jsonObject.get("name") == "airbag" && CarDataValueHolder((Object)jsonObject.get("value")) == true){
+	    	System.out.println("airbag activated");
+	    }
+
+	    if(jsonObject.get("name") == "antispin" && CarDataValueHolder((Object)jsonObject.get("value") == true){
+	    	System.out.println("antispin activated");
+	    }
+            */
+ 	
         } 
         catch (IllegalStateException e)
         {
