@@ -34,28 +34,30 @@ public class JSONRead {
     	carDataJsonObjects=json2CarData(jsonObjects);
     	for(NewCarData cd:carDataJsonObjects)
     	{
-    		//checks if the data is airbag and if it was activated
-    		if(cd.variable.equals("airbag")){
-    			if(cd.booleanValue == true){
-    		    	System.out.println("airbag activated");
-    			}
-    			else {
-        			System.out.println("no activation");
-        		}
-       		}
-    		//checks if the data is anti-spin and if it was activated
-    		else if(cd.variable.equals("anti_spin")){
-    			if(cd.booleanValue == true){
-    				System.out.println("antispin activated");
-    			}
-    			else {
-        			System.out.println("no activation");
-        		}
+    		if(cd.variable.equals("airbag")||cd.variable.equals("anti_spin")){
+	    		//checks if the data is airbag and if it was activated
+	    		if(cd.variable.equals("airbag")){
+	    			if(cd.booleanValue == true){
+	    		    	System.out.println("airbag activated");
+	    			}
+	    			else {
+	        			System.out.println("no activation");
+	        		}
+	       		}
+	    		//checks if the data is anti-spin and if it was activated
+	    		else {
+	    			if(cd.booleanValue == true){
+	    				System.out.println("antispin activated");
+	    			}
+	    			else {
+	        			System.out.println("no activation");
+	        		}
+	    		}
+	    		System.out.println(cd);
     		}
     		else {
-    			System.out.println("no activation");
-    		}
     		System.out.println(cd);
+    		}
     	}
     }
     
