@@ -10,6 +10,34 @@ public class Norway {
 ArrayList<String> kommuner;
 ArrayList<String> fylker;
 
+	public Norway()
+	{
+		kommuner = new ArrayList<String>();
+		fylker = new ArrayList<String>();
+		addFylker();
+		addKommuner();
+	}
+
+public String getKommuneNumber(int i)
+{
+	return kommuner.get(i);
+}
+
+public String getFylkeNumber(int i)
+{
+	return fylker.get(i);
+}
+
+public int getNumberOfKommuner()
+{
+	return kommuner.size();
+}
+
+public int getNumberOfFylker()
+{
+	return fylker.size();
+}
+
 private void addFylker()
 {
 	this.fylker.add("Østfold");

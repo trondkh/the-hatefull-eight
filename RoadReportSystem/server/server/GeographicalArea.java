@@ -67,10 +67,12 @@ public class GeographicalArea {
 	public String toString()
 	{
 		String retVal = new String("");
+		retVal+= this.countyName + " has the following cars:\n";
 		for(CarData cd:cars)
 		{
 			retVal += cd.toString() + "\n";
 		}
+		retVal += "end of " + this.countyName + "\n-----\n\n";
 		return retVal;
 	}
 }

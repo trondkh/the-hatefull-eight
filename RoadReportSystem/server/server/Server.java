@@ -11,7 +11,8 @@ public class Server {
 	public void fetchFile(){
 	try{
 		// noe er galt med URL
-		org.apache.commons.io.FileUtils.copyURLToFile("org.ntnu.no/trd", "test.json");
+		// Disabled with comment because this gives compilation error.
+//		org.apache.commons.io.FileUtils.copyURLToFile("org.ntnu.no/trd", "test.json");
 	
 	}catch(Exception e){
 	        System.out.println(e);
