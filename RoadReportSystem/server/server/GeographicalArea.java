@@ -18,6 +18,8 @@ public class GeographicalArea {
 	{
 		this.countyName = countyName;
 		this.cars = new LinkedList<CarData>();
+		this.upperLimit = 1000;
+		this.expirationHours = (24*1);
 	}
 	
 	public void setUpperLimitCars(int upperLimit)

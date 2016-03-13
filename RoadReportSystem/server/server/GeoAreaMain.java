@@ -8,8 +8,8 @@ public class GeoAreaMain {
 
 	public static void main(String[] args) {
 		GeoAreaMain gam = new GeoAreaMain();
-//		gam.init();
-//		gam.run();
+		gam.init();
+		gam.run();
 	}
 	
 	public void init()
@@ -20,6 +20,14 @@ public class GeoAreaMain {
 		{
 			norway.add(new GeographicalArea(n.getKommuneNumber(i)));
 		}
+		// Add cars to some random fylker
+		CarData cd = new CarData("Car in a fylke...", 666);
+		norway.get(0).updateWithCarData(cd);
+		norway.get(10).updateWithCarData(cd);
+		norway.get(20).updateWithCarData(cd);
+		norway.get(32).updateWithCarData(cd);
+		norway.get(66).updateWithCarData(cd);
+		norway.get(50).updateWithCarData(cd);
 	}
 	
 	public void run()
