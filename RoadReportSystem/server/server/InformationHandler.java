@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class InformationHandler {
 	
+	
+	private double lat, lon;
+	
 	public InformationHandler() {
 	
 	}
@@ -13,14 +16,15 @@ public class InformationHandler {
 		String temp = str;
 		
 		String[] subs = temp.trim().split(",");
-		double lat = Double.parseDouble(subs[0].trim());
-		double lon = Double.parseDouble(subs[1].trim());
+		this.lat = Double.parseDouble(subs[0].trim());
+		this.lon = Double.parseDouble(subs[1].trim());
 		
 		CoordinateHandler coordinates = new CoordinateHandler(lat, lon);
 		
 		XMLFile yr = new XMLFile(true, coordinates.generateYrURL());
+		XMLFile vegvesen = new XMLFile(true, "http://www.vegvesen.no/trafikk/xml/savedsearch.xml?id=600");
 		
-		XMLHandler xmlHandler = new XMLHandler(yr, null, coordinates);
+		XMLHandler xmlHandler = new XMLHandler(yr, vegvesen, coordinates);
 		//xmlHandler.exampleRequest();
 		
 		return generateResponse(xmlHandler);
@@ -32,6 +36,9 @@ public class InformationHandler {
 		
 		ArrayList<String> tags = new ArrayList<String>();
 		ArrayList<String> values = new ArrayList<String>();
+		
+		tags.add("precipitation"); //Nedbør
+		values.add("value");
 		
 		tags.add("windDirection");
 		values.add("deg");
@@ -57,6 +64,12 @@ public class InformationHandler {
 			temp += (tags.get(i) + " / " + values.get(i) + ": " + results.get(i)) + "\n";
 		}
 		
+		ArrayList<Integer> messages = xmlHandler.getCloseWarnings(lat, lon, 1.0);
+		
+		for(int i = 0; i < messages.size(); i++) {
+			temp += xmlHandler.vegvesenExtractText(messages.get(i), "heading") + "\n";
+			temp += "\t" + xmlHandler.vegvesenExtractText(messages.get(i), "messageType") + "\n";
+		}
 		
 		return temp;
 	}

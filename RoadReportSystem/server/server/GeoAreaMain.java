@@ -13,9 +13,9 @@ public class GeoAreaMain {
 		InformationHandler informationHandler = new InformationHandler();
 		System.out.println(informationHandler.parseMessage("63.415763,10.406500"));
 		
-		GeoAreaMain gam = new GeoAreaMain();
+		/*GeoAreaMain gam = new GeoAreaMain();
 		gam.init();
-		gam.run();
+		gam.run();*/
 		
 	}
 	

@@ -84,14 +84,15 @@ public class XMLHandler {
 		
 		ArrayList<Integer> timeSubParts = yr.getTagChildren(indexOfTime);
 		
-		for(int i = 0; i < timeSubParts.size(); i++) {
-			for(int i2 = 0; i2 < requestLength; i2++) {
+		for(int i2 = 0; i2 < requestLength; i2++) {
+			for(int i = 0; i < timeSubParts.size(); i++) {
 				if(yr.getAttributeFromTag(timeSubParts.get(i), "tagname").equals(tags.get(i2).trim())) {
 					temp.add(yr.getAttributeFromTag(timeSubParts.get(i), values.get(i2)));
 					continue;
 				}
 			}
 		}
+		
 		
 		System.out.println("------Recieved " + temp.size() + " results--------");
 		return temp;
@@ -131,6 +132,75 @@ public class XMLHandler {
 		return requestYr(times, tags, values);
 	}
 	/////////////////////////////////////////////////
+	
+	public ArrayList<Integer> getCloseWarnings(double lat, double lon, double threshold) {
+		ArrayList<Integer> messages = vegvesen.getTagsNamed("message");
+		ArrayList<Integer> startPositions = vegvesen.getTagsNamed("startPoint");
+		ArrayList<Integer> relevantOnes = new ArrayList<Integer>();
+		
+		for(int i = 0; i < startPositions.size(); i++) {
+			ArrayList<Integer> children = vegvesen.getTagChildren(startPositions.get(i));
+			
+			double x = Double.parseDouble(vegvesen.getText(children.get(0)));
+			double y = Double.parseDouble(vegvesen.getText(children.get(1)));
+			
+			double distance = Math.sqrt(Math.pow(x - lon, 2) + Math.pow(y - lat, 2));
+			
+			if(distance > threshold) continue;
+			
+			for(int i2 = 0; i2 < messages.size(); i2++) {
+				if(vegvesen.getTagTree(startPositions.get(i)).indexOf(messages.get(i2)) != -1) {
+					int index = messages.get(i2);
+					if(!vegvesenTimeIsValid(vegvesenExtractText(messages.get(i2), "validTo"))) continue;
+					relevantOnes.add(index);
+				}
+			}
+		}
+		
+		if(relevantOnes.size() < 1) {
+			System.out.println("Vegvesen: No relevant warnings");
+			return null;
+		}
+		
+		return relevantOnes;
+	}
+	
+	public String vegvesenExtractText(int parent, String name) {
+		for(int i = 0; i < vegvesen.getTagChildren(parent).size(); i++) {
+			if(vegvesen.getAttributeFromTag(vegvesen.getTagChildren(parent).get(i), "tagname").equals(name)) {
+				return vegvesen.getText(vegvesen.getTagChildren(parent).get(i));
+			}
+		}
+		
+		return "N/A";
+	}
+	
+	public boolean vegvesenTimeIsValid(String str) {
+		if(str.equals("N/A")) return false;
+		
+		String[] parts = str.trim().split(" ");
+		String[] date = parts[0].split("-");
+		String[] time = parts[1].split(":");
+		int[] dateNumbers = new int[6];
+		
+		for(int i = 0; i < parts.length; i++) dateNumbers[i] = Integer.parseInt(date[0]);
+		for(int i = 0; i < 2; i++) dateNumbers[3 + i] = Integer.parseInt(time[i]);
+		
+		Date d = new Date();
+		int[] localTimes = {d.getYear() + 1900, d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()};
+		
+		for(int i = 0; i < dateNumbers.length; i++) {
+			if(dateNumbers[i] < localTimes[i]) {
+				return false;
+			} else if(dateNumbers[i] > localTimes[i]) {
+				return true;
+			}
+		}
+		
+		return true;
+	}
+	
+	//////////////////VEGVESEN//////////////////////
 	
 	public static String generateTime(int[] times) {
 		//Format year, month, day, hour, minute, second
