@@ -33,7 +33,7 @@ public class Display extends JSONRead{
     }
     public void displayData()
     {
-    	//Itterate over the array
+    	//Iterate over the array
     	for (DisplayCarData info:displayInfo){
     		//If the both the antispin and the airbag activetade, notify driver about slippery and accident
     		if((info.airbag == true)&&(info.antispin == true) ) {
