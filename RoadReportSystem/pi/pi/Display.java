@@ -4,17 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Iterator;
- 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
 
 /**
  * @author Crunchify.com
  */
  
-public class Display {
+public class Display extends JSONRead{
  
 
 	
@@ -32,7 +28,7 @@ public class Display {
     	//Creates an array of strings and reads the file
     	readFile(jsonObjects);
     	//Converts the data into objects with all the information with the same timestamp
-    	displayInfo = json2CarData(jsonObjects);
+    	displayInfo = json2DisplayData(jsonObjects);
     	
     }
     public void displayData()
@@ -58,9 +54,9 @@ public class Display {
     	}
     }
     
-    public ArrayList<DisplayCarData> json2CarData(ArrayList<String> al)
+    public ArrayList<DisplayCarData> json2DisplayData(ArrayList<String> al)
     {
-    	ArrayList<DisplayCarData> carDatas = new ArrayList<DisplayCarData>();
+    	ArrayList<DisplayCarData> displayData = new ArrayList<DisplayCarData>();
     	int length = al.size();
     	for (int i= 0; i < length; i+=4 ){
     		//Data form the car are 4 strings per timestamp, reads 4 and 4 lines and stores the data
@@ -68,9 +64,9 @@ public class Display {
     		NewCarData cardata2 = jsonParser(al.get(i+1));
     		NewCarData cardata3 = jsonParser(al.get(i+2));
     		NewCarData cardata4 = jsonParser(al.get(i+3));
-    		carDatas.add(new DisplayCarData(cardata1.time,cardata1.numberValue,cardata2.numberValue,cardata3.booleanValue,cardata4.booleanValue));
+    		displayData.add(new DisplayCarData(cardata1.time,cardata1.numberValue,cardata2.numberValue,cardata3.booleanValue,cardata4.booleanValue));
     	}
-    	return carDatas;
+    	return displayData;
     }
     
     public void readFile(ArrayList<String> al)
@@ -98,54 +94,5 @@ public class Display {
 			e.printStackTrace();
 		}
     	
-    }
-    
-    NewCarData jsonParser(String str)
-    {
-		NewCarData cd = null;
-        try {
-			if(str==null || str.length()==0)
-			{
-				String errorMsg = "String variable is invalid for jsonParser. Str=";
-				errorMsg+=str;
-
-				throw new IllegalStateException(errorMsg);
-			}
-			JSONParser parser = new JSONParser();
-        	Object obj = parser.parse(str);
-            JSONObject jsonObject = (JSONObject) obj;
- 
-            String variableName = (String) jsonObject.get("name");
-            // Checks what kind of variable value should be stored in
-            	// here boolean
-            if ((variableName.equals("airbag"))||(variableName.equals("anti_spin"))){
-            	boolean value = (boolean)jsonObject.get("value");
-            	double timestamp = (double) jsonObject.get("timestamp");
-                cd = new NewCarData(timestamp,value,variableName);
-            }
-            	// here double
-            else if ((variableName.equals( "longitude"))||(variableName.equals("latitude"))){
-            	double value = (double)jsonObject.get("value");
-            	double timestamp = (double) jsonObject.get("timestamp");
-            	cd = new NewCarData(timestamp,value,variableName);
-            }
-            else {
-           
-            	String errorMsg = "String name variable is invalid for jsonParser. Str=";
-				errorMsg+=str;
-
-				throw new IllegalStateException(errorMsg);
-            }         
- 	
-        } 
-        catch (IllegalStateException e)
-        {
-        	System.out.println(e);
-        }
-        catch (Exception e) {
-      		System.out.println("Error parsing: " + str);
-            e.printStackTrace();
-        }
-        return cd;
     }
 }
