@@ -7,9 +7,13 @@ public class GeoAreaMain {
 	ArrayList<GeographicalArea> norway;
 
 	public static void main(String[] args) {
+		InformationHandler informationHandler = new InformationHandler();
+		System.out.println(informationHandler.parseMessage("63.415763,10.406500"));
+		
 		GeoAreaMain gam = new GeoAreaMain();
 		gam.init();
 		gam.run();
+		
 	}
 	
 	public void init()
