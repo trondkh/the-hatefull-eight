@@ -8,7 +8,11 @@ public class Server {
 	
 	// prøver å heten json-fil fra server
 	
-	public void fetchFile(){
+	public Server(){
+        fetchFile();
+    }
+    
+    public void fetchFile(){
 	try{
 		// noe er galt med URL
 		org.apache.commons.io.FileUtils.copyURLToFile("org.ntnu.no/trd", "test.json");
@@ -17,5 +21,9 @@ public class Server {
 	        System.out.println(e);
 	    }
 	}
+    // lager en main for å teste den
+    public static void main(String[] args){
+        new Server();
+    }
 	
 }	
