@@ -29,24 +29,31 @@ public class Display {
     
     public void storeData(){
     	ArrayList<String> jsonObjects = new ArrayList<String>();
+    	//Creates an array of strings and reads the file
     	readFile(jsonObjects);
+    	//Converts the data into objects with all the information with the same timestamp
     	displayInfo = json2CarData(jsonObjects);
     	
     }
     public void displayData()
     {
+    	//Itterate over the array
     	for (DisplayCarData info:displayInfo){
+    		//If the both the antispin and the airbag activetade, notify driver about slippery and accident
     		if((info.airbag == true)&&(info.antispin == true) ) {
     			System.out.println("Accident,slippery");
     		}
+    		//if only the airbag, notify driver about accident
     		else if (info.airbag == true){
     			System.out.println("Accident");
     		}
+    		//if only antispin, notify driver about slippery road
     		else if (info.antispin == true){
     			System.out.println("Slippery");
     		}
+    		//Test that it actually checks all objects
     		else{
-    			System.out.println("Nothing");
+    		//	System.out.println("Nothing");
     		}
     	}
     }
@@ -56,6 +63,7 @@ public class Display {
     	ArrayList<DisplayCarData> carDatas = new ArrayList<DisplayCarData>();
     	int length = al.size();
     	for (int i= 0; i < length; i+=4 ){
+    		//Data form the car are 4 strings per timestamp, reads 4 and 4 lines and stores the data
     		NewCarData cardata1 = jsonParser(al.get(i));
     		NewCarData cardata2 = jsonParser(al.get(i+1));
     		NewCarData cardata3 = jsonParser(al.get(i+2));
