@@ -14,20 +14,10 @@ public class DisplayXMLData extends InformationHandler {
         ArrayList<String> tags = new ArrayList<String>();
         ArrayList<String> values = new ArrayList<String>();
 
-
         tags.add("temperature");
         values.add("value");
 
         tags.add("temperature");
-        values.add("unit");
-
-        tags.add("windSpeed");
-        values.add("name");
-
-        tags.add("pressure");
-        values.add("value");
-
-        tags.add("pressure");
         values.add("unit");
 
         ArrayList<String> results = xmlHandler.requestYr(tags, values);
