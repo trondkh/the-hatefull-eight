@@ -33,11 +33,11 @@ public class UNITTEST_GeographicalLocation {
 	
 	public void addCars()
 	{
-		cars.add(new CarData("Car 1", 10));
-		cars.add(new CarData("Car 2", 100));
-		cars.add(new CarData("Car 3", 5));
-		cars.add(new CarData("Car 4", 534));
-		cars.add(new CarData("Car 5", 9));
+		cars.add(new CarData("Car 1", 10,"AA1234"));
+		cars.add(new CarData("Car 2", 100,"AB5678"));
+		cars.add(new CarData("Car 3", 5, "BB1245"));
+		cars.add(new CarData("Car 4", 534, "BC3232"));
+		cars.add(new CarData("Car 5", 9, "XXY32"));
 	}
 
 	@Test

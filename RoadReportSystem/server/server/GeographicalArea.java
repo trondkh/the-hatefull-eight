@@ -1,5 +1,6 @@
 package server;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -20,6 +21,22 @@ public class GeographicalArea {
 		this.cars = new LinkedList<CarData>();
 		this.upperLimit = 1000;
 		this.expirationHours = (24*1);
+	}
+	
+	public String getName()
+	{
+		return this.countyName;
+	}
+	
+	public ArrayList<CarData> getListOfCars()
+	{
+		ArrayList<CarData> l = new ArrayList<CarData>();
+		Iterator<CarData> it = getCarDataIterator();
+		while(it.hasNext())
+		{
+			l.add(new CarData(it.next()));
+		}
+		return l;
 	}
 	
 	public void setUpperLimitCars(int upperLimit)
@@ -58,6 +75,11 @@ public class GeographicalArea {
 		{
 			carIt.next().incrementHours();
 		}
+	}
+	
+	public int numberOfCarsInArea()
+	{
+		return cars.size();
 	}
 	
 	private Iterator<CarData> getCarDataIterator()

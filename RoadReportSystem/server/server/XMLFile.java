@@ -61,6 +61,8 @@ public class XMLFile {
 		while(currentIndex < rawFile.length()) {
 			int endIndex = getTagEndIndex(currentIndex);
 			if(endIndex == -1) break;						//Exits loop if endIndex == -1, error code of getTagEndIndex()
+			//System.out.println(rawFile.substring(currentIndex, endIndex));
+			//if(rawFile.substring(currentIndex).trim().startsWith("<xCoord")) System.out.println("Pre: " + rawFile.substring(currentIndex, endIndex));
 			
 			//Parses tag, and updates index to parent tag if new tag is multi component
 			//For more info see comment on parseTag()!
@@ -274,7 +276,8 @@ public class XMLFile {
 			}
 			
 			if(currentChar == '<' && index != -1 && !hasText) break;	//Breaks if there is no text, and '<' is start of new, independent tag
-			if(!hasText && Character.isAlphabetic(currentChar) && index != -1) hasText = true;	//Indicates that tag has text
+			
+			if(!hasText && (Character.isAlphabetic(currentChar) || Character.isDigit(currentChar)) && index != -1) hasText = true;	//Indicates that tag has text
 		}
 		
 		return index;
@@ -435,4 +438,6 @@ public class XMLFile {
 		if(index < 0 || index >= children.size()) return null;
 		return children.get(index);
 	}
+	
+	public String toString() {return rawFile;}
 }
