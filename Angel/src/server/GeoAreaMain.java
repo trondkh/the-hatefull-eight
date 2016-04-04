@@ -8,6 +8,8 @@ public class GeoAreaMain {
 
 	ArrayList<GeographicalArea> norway;
 	Map<String,GeographicalArea> norwayDict;
+	Listener listener;
+	GeographicalArea k;
 
 	public static void main(String[] args) {
 		InformationHandler informationHandler = new InformationHandler();
@@ -21,6 +23,7 @@ public class GeoAreaMain {
 	
 	public void init()
 	{
+		listener = new Listener();
 		norway = new ArrayList<GeographicalArea>();
 		norwayDict = new HashMap<String,GeographicalArea>();
 		Norway n = new Norway();
@@ -38,6 +41,14 @@ public class GeoAreaMain {
 	{
 		addTestData();
 		printAreasWithCars();
+		
+		while(true)
+		{
+			getNewCar(listener.getCarData());
+			CarData dummy = createCarPackage();
+			listener.sendCarData(dummy);
+			listener.close();
+		}
 	}
 
 	private String getKommune(double latitude, double longditude)
@@ -72,13 +83,29 @@ public class GeoAreaMain {
 		norway.get(50).updateWithCarData(cd);
 	}
 	
-	private boolean getNewCar(CarData newCar)
+	private void getNewCar(CarData newCar)
 	{
-		String kommune = getKommune(newCar.latitude, newCar.longditude);
-		GeographicalArea k = norwayDict.get(kommune);
-		k.updateWithCarData(new CarData(1, newCar.licensePlate));
+		String kommune = getKommune(0,0);
+		k = norwayDict.get(kommune);
+		k.updateWithCarData(new CarData(1, newCar.getLicensePlate()));
 	}
 	
+	private CarData createCarPackage()
+	{
+		int numAirbag = 0;
+		int icy = 0;
+		
+		for(CarData c : k.cars)
+		{
+			if(c.isAirbag())
+			{
+				numAirbag++;
+			}
+			icy+=c.getSlippage();
+		}
+
+		return new CarData("abc");
+	}
 	
 
 }

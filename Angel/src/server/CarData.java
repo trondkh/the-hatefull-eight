@@ -6,6 +6,7 @@ public class CarData {
 	private String message;
 	private int roadSlippage;
 	private String licensePlate;
+	private boolean airbag;
 	
 	public CarData(CarData cd)
 	{
@@ -61,6 +62,21 @@ public class CarData {
 		return this.numberOfHoursInServer;
 	}
 	
+	public void setAirbag()
+	{
+		this.airbag = true;
+	}
+	
+	public void resetAirbag()
+	{
+		this.airbag = false;
+	}
+	
+	public boolean isAirbag()
+	{
+		return this.airbag;
+	}
+	
 	@Override
 	public String toString()
 	{
@@ -73,5 +89,10 @@ public class CarData {
 	
 	public String getLicensePlate(){
 		return licensePlate;
+	}
+	
+	public int getSlippage()
+	{
+		return this.roadSlippage;
 	}
 }

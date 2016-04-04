@@ -10,7 +10,7 @@ public class GeographicalArea {
 	private String countyName;
 	private WeatherData weatherData;
 	private RoadData roadData;
-	private Queue<CarData> cars;
+	public Queue<CarData> cars;
 	private Iterator<CarData> carIt;
 	private int upperLimit;
 	private int expirationHours;
