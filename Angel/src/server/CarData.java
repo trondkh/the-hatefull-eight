@@ -70,4 +70,8 @@ public class CarData {
 		retVal += " Msg: " + this.message + "\n";
 		return retVal;
 	}
+	
+	public String getLicensePlate(){
+		return licensePlate;
+	}
 }

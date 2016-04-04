@@ -39,13 +39,6 @@ public class GeoAreaMain {
 		addTestData();
 		printAreasWithCars();
 	}
-	
-	public void addCarSlippage(String licensePlate, double latitude, double longditude)
-	{
-		String kommune = getKommune(latitude,longditude);
-		GeographicalArea k = norwayDict.get(kommune);
-		k.updateWithCarData(new CarData(1,licensePlate));
-	}
 
 	private String getKommune(double latitude, double longditude)
 	{
@@ -78,5 +71,14 @@ public class GeoAreaMain {
 		norway.get(66).updateWithCarData(cd);
 		norway.get(50).updateWithCarData(cd);
 	}
+	
+	private boolean getNewCar(CarData newCar)
+	{
+		String kommune = getKommune(newCar.latitude, newCar.longditude);
+		GeographicalArea k = norwayDict.get(kommune);
+		k.updateWithCarData(new CarData(1, newCar.licensePlate));
+	}
+	
+	
 
 }

@@ -61,6 +61,12 @@ public class GeographicalArea {
 	
 	public void updateWithCarData(CarData cd)
 	{
+		for(CarData c : cars){
+			if(c.isThisLicensePlate(cd.getLicensePlate())){
+				cars.remove(c);
+				break;
+			}
+		}
 		cars.add(cd);
 		if(cars.size()>this.upperLimit)
 		{
