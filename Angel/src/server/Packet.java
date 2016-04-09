@@ -1,4 +1,6 @@
-﻿import java.util.ArrayList;
+﻿package server;
+
+import java.util.ArrayList;
 
 public class Packet {
 	

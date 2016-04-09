@@ -14,7 +14,7 @@ public class Pi {
 		Reader r;
 		try
 		{
-			r = new FileReader("./pi/pi/uptown-west.json");
+			r = new FileReader("./Angel/src/pi/uptown-west.json");
 			BufferedReader br = new BufferedReader(r);
 			String str;
 			while((str = br.readLine())!=null)
