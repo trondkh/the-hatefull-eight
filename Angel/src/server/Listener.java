@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import Packets.Packet;
 
 public class Listener {
 
@@ -18,31 +19,36 @@ public class Listener {
 	
 	public void run()
 	{
+		
 	}
 	
-	public CarData getCarData()
+	public Packet getCarData()
 	{
-		CarData cd = null;
+		Packet packet = null;
 		try
 		{
 			serverSocket = new ServerSocket(6666);
+			serverSocket.setReuseAddress(true);
 			socket = serverSocket.accept();
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-			cd = (CarData)ois.readObject();
+			packet = (Packet)ois.readObject();
+//			ois.close();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return cd;
+		
+		return packet;
 	}
 	
-	public void sendCarData(CarData car)
+	public void sendCarData(Packet packet)
 	{
 		try
 		{
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-			oos.writeObject(car);
+			oos.writeObject(packet);
+			System.out.println("Sending cardata to pi...");
 		}
 		catch(Exception e)
 		{
@@ -54,6 +60,7 @@ public class Listener {
 	{
 		try {
 			socket.close();
+			serverSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

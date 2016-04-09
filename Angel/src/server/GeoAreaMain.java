@@ -3,6 +3,8 @@ package server;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import Packets.Packet;
+
 
 public class GeoAreaMain {
 
@@ -40,13 +42,12 @@ public class GeoAreaMain {
 	public void run()
 	{
 		addTestData();
-		printAreasWithCars();
 		
 		while(true)
 		{
 			getNewCar(listener.getCarData());
-			CarData dummy = createCarPackage();
-			listener.sendCarData(dummy);
+			Packet packet= createCarPackage();
+			listener.sendCarData(packet);
 			listener.close();
 		}
 	}
@@ -59,7 +60,7 @@ public class GeoAreaMain {
 	
 	private void printAreasWithCars()
 	{
-		for(GeographicalArea a:norway)
+		for(GeographicalArea a:norwayDict.values())
 		{
 			if(a.numberOfCarsInArea()>0)
 			{
@@ -81,16 +82,22 @@ public class GeoAreaMain {
 		norway.get(32).updateWithCarData(cd);
 		norway.get(66).updateWithCarData(cd);
 		norway.get(50).updateWithCarData(cd);
+		for(GeographicalArea ga:norway)
+		{
+			norwayDict.put(ga.getName(), ga);
+		}
 	}
 	
-	private void getNewCar(CarData newCar)
+	private void getNewCar(Packet packet)
 	{
-		String kommune = getKommune(0,0);
-		k = norwayDict.get(kommune);
-		k.updateWithCarData(new CarData(1, newCar.getLicensePlate()));
+		String kommune = getKommune(packet.getLatitude(),packet.getLongitude());
+		k = norwayDict.get(kommune);	1	
+		k.updateWithCarData(new CarData("bla bla", 1, packet.getLicensePlate()));
+		printAreasWithCars();
+		
 	}
 	
-	private CarData createCarPackage()
+	private Packet createCarPackage()
 	{
 		int numAirbag = 0;
 		int icy = 0;
@@ -104,7 +111,7 @@ public class GeoAreaMain {
 			icy+=c.getSlippage();
 		}
 
-		return new CarData("abc");
+		return new Packet(new ArrayList<String>(), numAirbag, icy, "Road is fine");
 	}
 	
 

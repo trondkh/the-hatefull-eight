@@ -1,12 +1,16 @@
-﻿import java.util.ArrayList;
+﻿package Packets;
 
-public class Packet {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Packet implements Serializable{
 	
 	private String roadData, coordinates;
 	private ArrayList<String> weatherData;
 	private boolean isRequest, isReport;
 	private int numberOfAirbags, numberOfSlipperies;
 	private double longitude, latitude;
+	String licensePlate;
 	
 	
 	public Packet(ArrayList<String> weatherData, int numberOfAirbags, int numberOfSlipperies, String roadData) {
@@ -24,7 +28,7 @@ public class Packet {
 		this.coordinates = coordinates;
 	}
 	
-	public Packet(boolean isReport, double latitude, double longitude, boolean hasAirbag, boolean hasSlipped) {
+	public Packet(boolean isReport, double latitude, double longitude, boolean hasAirbag, boolean hasSlipped, String licensePlate) {
 		this.isReport = isReport;
 		this.longitude = longitude;
 		this.latitude = latitude;
@@ -33,6 +37,7 @@ public class Packet {
 		roadData = null;
 		coordinates = null;
 		weatherData = null;
+		this.licensePlate = licensePlate;
 	}
 	
 	
@@ -75,4 +80,6 @@ public class Packet {
 	public boolean isReport() {return isReport;}
 	public double getLatitude() {return latitude;}
 	public double getLongitude() {return longitude;}
+	public String getLicensePlate() { return this.licensePlate; }
+	
 }

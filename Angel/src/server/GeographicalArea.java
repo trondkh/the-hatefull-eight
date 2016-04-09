@@ -61,6 +61,7 @@ public class GeographicalArea {
 	
 	public void updateWithCarData(CarData cd)
 	{
+		System.out.println("Car in " + this.countyName + " with plate " + cd.getLicensePlate());
 		for(CarData c : cars){
 			if(c.isThisLicensePlate(cd.getLicensePlate())){
 				cars.remove(c);
