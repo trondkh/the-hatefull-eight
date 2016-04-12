@@ -1,12 +1,15 @@
 package server;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class CarData {
 	
-	private int numberOfHoursInServer;
 	private String message;
 	private boolean roadSlippage;
 	private String licensePlate;
 	private boolean airbag;
+	private Calendar timestamp;
 	
 	public CarData(CarData cd)
 	{
@@ -26,7 +29,7 @@ public class CarData {
 	private void init(String licensePlate)
 	{
 		this.licensePlate = licensePlate;
-		this.numberOfHoursInServer = 0;
+		this.timestamp = Calendar.getInstance();
 		this.message = "";
 		this.roadSlippage = false;
 		this.airbag = false;
@@ -36,15 +39,11 @@ public class CarData {
 	{
 		return this.licensePlate.equals(licensePlate);
 	}
-
-	public void incrementHours()
-	{
-		this.numberOfHoursInServer++;
-	}
 	
-	public int getNumberOfHoursInServer()
+	public int getSeconds()
 	{
-		return this.numberOfHoursInServer;
+		return (int)(Calendar.getInstance().getTimeInMillis() - timestamp.getTimeInMillis());
+//		LocalDateTime.now();
 	}
 	
 	public boolean isAirbag()
@@ -65,7 +64,7 @@ public class CarData {
 	public String toString()
 	{
 		String retVal = new String("");
-		retVal += "Car hours: " + Integer.toString(this.numberOfHoursInServer);
+		retVal += "Car seconds: " + this.getSeconds();
 		retVal += " RoadSlippage: " + this.roadSlippage;
 		retVal += " Msg: " + this.message + "\n";
 		return retVal;
