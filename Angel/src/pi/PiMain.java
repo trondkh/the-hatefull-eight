@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import Packets.Packet;
 
 
-public class Pi {
+public class PiMain {
 	
 	int licencePlate = 1;
 	
@@ -52,7 +52,7 @@ public class Pi {
 	}
 	
 	public static void main(String[] args) {
-		Pi p = new Pi();
+		PiMain p = new PiMain();
 //		p.readShit();
 		p.testloop();
 	}
@@ -65,7 +65,7 @@ public class Pi {
 		while(true)
 		{
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
