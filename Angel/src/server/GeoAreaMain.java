@@ -54,8 +54,8 @@ public class GeoAreaMain {
 
 	private String getKommune(double latitude, double longditude)
 	{
-		// Some magical google api will give us a name of the kommune as string....
-		return "Trondheim";
+		CoordinateHandler city = new CoordinateHandler(latitude, longditude); 
+		return city.getCityName();
 	}
 	
 	private void printAreasWithCars()
@@ -91,7 +91,7 @@ public class GeoAreaMain {
 	private void getNewCar(Packet packet)
 	{
 		String kommune = getKommune(packet.getLatitude(),packet.getLongitude());
-		k = norwayDict.get(kommune);	1	
+		k = norwayDict.get(kommune);
 		k.updateWithCarData(new CarData("bla bla", 1, packet.getLicensePlate()));
 		printAreasWithCars();
 		

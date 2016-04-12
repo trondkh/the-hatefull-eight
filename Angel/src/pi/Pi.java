@@ -2,6 +2,7 @@ package pi;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
@@ -21,7 +22,7 @@ public class Pi {
 		Reader r;
 		try
 		{
-			r = new FileReader("./pi/pi/uptown-west.json");
+			r = new FileReader("./Angel/src/pi/uptown-west.json");
 			BufferedReader br = new BufferedReader(r);
 			String str;
 			while((str = br.readLine())!=null)
@@ -70,13 +71,15 @@ public class Pi {
 				e.printStackTrace();
 			}
 			testSendData();
+			Packet packet = testRecvData();
+			testPrintPacket(packet);
 		}
 	}
 	public void testSendData()
 	{
 		this.licencePlate++;
 		
-		Packet packet = new Packet(true, 0, 0, true, false, Integer.toString(licencePlate));
+		Packet packet = new Packet(true, 63.415763, 10.406500, true, false, Integer.toString(licencePlate));
 		try
 		{
 			socket = new Socket("localhost",6666);
@@ -88,6 +91,26 @@ public class Pi {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public Packet testRecvData()
+	{
+		Packet packet = null;
+		try {
+			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+			packet = (Packet)ois.readObject();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return packet;
+	}
+	
+	public void testPrintPacket(Packet packet)
+	{
+		String str = "Airbags: " + packet.getAirbags() + " Slippness: " + packet.getSlips();
+		str+= " and current road condition: " + packet.getRoadCondition() + "\n";
+		System.out.println(str);
 	}
 
 }

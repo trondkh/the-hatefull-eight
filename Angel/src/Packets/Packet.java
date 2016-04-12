@@ -81,5 +81,9 @@ public class Packet implements Serializable{
 	public double getLatitude() {return latitude;}
 	public double getLongitude() {return longitude;}
 	public String getLicensePlate() { return this.licensePlate; }
+	public int getAirbags() { return this.numberOfAirbags; }
+	public int getSlips() { return this.numberOfSlipperies; }
+	public String getRoadCondition() { return this.roadData; }
+	
 	
 }

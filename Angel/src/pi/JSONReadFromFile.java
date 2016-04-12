@@ -56,7 +56,7 @@ public class JSONReadFromFile {
 		{
 //			r = new FileReader("./pi/pi/uptown-west.json");
 //			r = new FileReader("./pi/pi/uptown-west_TEST.json");
-			r = new FileReader("./pi/pi/JSONTest.json");
+			r = new FileReader("./Angel/src/pi/JSONTest.json");
 			BufferedReader br = new BufferedReader(r);
 			String str;
 			while((str = br.readLine())!=null)
