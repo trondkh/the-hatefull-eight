@@ -8,7 +8,6 @@ import Packets.Packet;
 
 public class GeoAreaMain {
 
-	ArrayList<GeographicalArea> norway;
 	Map<String,GeographicalArea> norwayDict;
 	Listener listener;
 	GeographicalArea k;
@@ -26,13 +25,10 @@ public class GeoAreaMain {
 	public void init()
 	{
 		listener = new Listener();
-		norway = new ArrayList<GeographicalArea>();
 		norwayDict = new HashMap<String,GeographicalArea>();
 		Norway n = new Norway();
 		for(int i=0;i<n.getNumberOfKommuner();i++)
 		{
-			norway.add(new GeographicalArea(n.getKommuneNumber(i)));
-			
 			// Add to dictionary/ map
 			GeographicalArea kommune = new GeographicalArea(n.getKommuneNumber(i));
 			norwayDict.put(kommune.getName(), kommune);
@@ -40,9 +36,7 @@ public class GeoAreaMain {
 	}
 	
 	public void run()
-	{
-		addTestData();
-		
+	{		
 		while(true)
 		{
 			getNewCar(listener.getCarData());
@@ -66,25 +60,6 @@ public class GeoAreaMain {
 			{
 				System.out.println(a.toString());
 			}
-		}
-	}
-
-	private void addTestData()
-	{
-		// Add cars to some random fylker
-		CarData cd = new CarData("Car in a fylke...", 666, "PK9999");
-		norway.get(0).updateWithCarData(cd);
-		norway.get(0).updateWithCarData(cd);
-		norway.get(0).updateWithCarData(cd);
-		norway.get(0).updateWithCarData(cd);
-		norway.get(10).updateWithCarData(cd);
-		norway.get(20).updateWithCarData(cd);
-		norway.get(32).updateWithCarData(cd);
-		norway.get(66).updateWithCarData(cd);
-		norway.get(50).updateWithCarData(cd);
-		for(GeographicalArea ga:norway)
-		{
-			norwayDict.put(ga.getName(), ga);
 		}
 	}
 	
