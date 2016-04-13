@@ -18,10 +18,15 @@ public class JSONDataFileGenerator {
 			//add the information you want
 	 
 			// try-with-resources statement based on post comment below :)
-			try (FileWriter file = new FileWriter("./Angel/src/pi/file1.txt")) {
+			try  {
+				FileWriter file = new FileWriter("./Angel/src/pi/file1.txt");	
 				file.write(obj.toJSONString());
 				System.out.println("Successfully Copied JSON Object to File...");
 				System.out.println("\nJSON Object: " + obj);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
 			}
 		}
 	}
