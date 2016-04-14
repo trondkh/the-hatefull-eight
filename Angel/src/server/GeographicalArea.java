@@ -10,17 +10,14 @@ public class GeographicalArea {
 	private String countyName;
 	private WeatherData weatherData;
 	private RoadData roadData;
-	public Queue<CarData> cars;
-	private Iterator<CarData> carIt;
+	public ArrayList<CarData> cars;
 	private int upperLimit;
-	private int expirationHours;
 	
 	public GeographicalArea(String countyName)
 	{
 		this.countyName = countyName;
-		this.cars = new LinkedList<CarData>();
+		this.cars = new ArrayList<CarData>();
 		this.upperLimit = 1000;
-		this.expirationHours = (24*1);
 	}
 	
 	public String getName()
@@ -66,17 +63,19 @@ public class GeographicalArea {
 		cars.add(cd);
 		if(cars.size()>this.upperLimit)
 		{
-			cars.remove();
+			cars.remove(cars.size()-1);
 		}
 	}
 	
 	public void removeOldCars(int seconds)
 	{
-		for(CarData cd:cars)
+		Iterator<CarData> it = cars.iterator();
+		while(it.hasNext())
 		{
-			if(cd.getSeconds()>seconds)
+			CarData cd = it.next();
+			if(cd.getSeconds()>=seconds)
 			{
-				this.cars.remove(cd);
+				it.remove();
 			}
 		}
 	}

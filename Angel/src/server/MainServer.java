@@ -35,10 +35,10 @@ public class MainServer {
 	public void run(){		
 		while(true){
 			getNewCar(listener.getCarData());
-			deleteOldCars(30);
 			Packet packet= createCarPackage();
 			listener.sendCarData(packet);
 			listener.close();
+			deleteOldCars(15);
 		}
 	}
 	

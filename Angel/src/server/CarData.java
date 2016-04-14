@@ -64,9 +64,10 @@ public class CarData {
 	public String toString()
 	{
 		String retVal = new String("");
-		retVal += "Car seconds: " + this.getSeconds();
-		retVal += " RoadSlippage: " + this.roadSlippage;
-		retVal += " Msg: " + this.message + "\n";
+		retVal += "Car in system: " + this.getSeconds() + " seconds";
+		retVal += " Icy road: " + (this.roadSlippage ? "YES" : "NO");
+		retVal += " Airbag deployed: " + (this.airbag ? "YES" : "NO");
+		retVal += " Licenseplate: " + this.licensePlate + "\n";
 		return retVal;
 	}
 }

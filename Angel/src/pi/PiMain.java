@@ -10,12 +10,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import Packets.Packet;
+import java.util.Random;
 
 
 public class PiMain {
 	
-	int licencePlate = 1;
 	String serverIP;
+	String licencePlate = "CD49873";
+	Packet packet = new Packet(true, 63.415763, 10.406500, true, false, licencePlate);
+	int teller = 0;
+	private Random random;
+	
+	ArrayList<Double> latitude = new ArrayList<Double>();
+	ArrayList<Double> longditude = new ArrayList<Double>();
 	
 	void readShit()
 	{
@@ -55,11 +62,13 @@ public class PiMain {
 	public static void main(String[] args) {
 		PiMain p = new PiMain(args);
 //		p.readShit();
-		p.testloop();
+		p.loop();
 	}
 
 	ServerSocket serverSocket;
 	Socket socket;
+	
+	
 	
 	public PiMain(String[] args)
 	{
@@ -74,57 +83,59 @@ public class PiMain {
 		}
 	}
 	
-	public void testloop() 
-	{
-		while(true)
-		{
+	public void loop() {
+		while(true) {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			testSendData();
-			Packet packet = testRecvData();
+			driveCar();
+			SendData();
+			Packet packet = RecvData();
 			testPrintPacket(packet);
 		}
 	}
-	public void testSendData()
-	{
-		this.licencePlate++;
-		
-		Packet packet = new Packet(true, 63.415763, 10.406500, true, false, Integer.toString(licencePlate));
-		try
-		{
-			socket = new Socket(serverIP,6666);
+	public void driveCar() {
+		packet = new Packet(true, latitude.get(teller), longditude.get(teller), getRandomBoolean(), getRandomBoolean(), licencePlate);
+		if(teller < latitude.size()){
+			teller ++;
+		}
+		else{
+			teller = 0;
+		}
+	}
+	
+	public void SendData() {
+		try{
+			socket = new Socket("localhost",6666);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(packet);
 			System.out.println("Sending packet");
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public Packet testRecvData()
-	{
+	public Packet RecvData() {
 		Packet packet = null;
-		try {
+		try{
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 			packet = (Packet)ois.readObject();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
+		} catch (ClassNotFoundException | IOException e){
 			e.printStackTrace();
 		}
 		return packet;
 	}
 	
-	public void testPrintPacket(Packet packet)
-	{
+	public void testPrintPacket(Packet packet) {
 		String str = "Airbags: " + packet.getAirbags() + " Slippness: " + packet.getSlips();
 		str+= " and current road condition: " + packet.getRoadCondition() + "\n";
 		System.out.println(str);
 	}
 
+    public boolean getRandomBoolean() {
+        return random.nextBoolean();
+    }
 }
