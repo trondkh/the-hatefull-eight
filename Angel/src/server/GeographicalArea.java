@@ -44,11 +44,6 @@ public class GeographicalArea {
 		this.upperLimit = upperLimit;
 	}
 	
-	public void setExpirationHours(int expirationHours)
-	{
-		this.expirationHours = expirationHours;
-	}
-	
 	public void updateWeatherData(WeatherData wd)
 	{
 		this.weatherData = wd;
@@ -75,12 +70,14 @@ public class GeographicalArea {
 		}
 	}
 	
-	public void oneHourHasPassed()
+	public void removeOldCars(int seconds)
 	{
-		carIt = getCarDataIterator();
-		while(carIt.hasNext())
+		for(CarData cd:cars)
 		{
-			carIt.next().incrementHours();
+			if(cd.getSeconds()>seconds)
+			{
+				this.cars.remove(cd);
+			}
 		}
 	}
 	

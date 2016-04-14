@@ -42,7 +42,7 @@ public class CarData {
 	
 	public int getSeconds()
 	{
-		return (int)(Calendar.getInstance().getTimeInMillis() - timestamp.getTimeInMillis());
+		return ((int)(Calendar.getInstance().getTimeInMillis() - timestamp.getTimeInMillis()))/1000;
 //		LocalDateTime.now();
 	}
 	

@@ -15,6 +15,7 @@ import Packets.Packet;
 public class PiMain {
 	
 	int licencePlate = 1;
+	String serverIP;
 	
 	void readShit()
 	{
@@ -52,13 +53,26 @@ public class PiMain {
 	}
 	
 	public static void main(String[] args) {
-		PiMain p = new PiMain();
+		PiMain p = new PiMain(args);
 //		p.readShit();
 		p.testloop();
 	}
 
 	ServerSocket serverSocket;
 	Socket socket;
+	
+	public PiMain(String[] args)
+	{
+		if(args.length==1)
+		{
+			this.serverIP = args[0];
+		}
+		else
+		{
+			this.serverIP = "localhost";
+//			this.serverIP = "192.168.1.102";
+		}
+	}
 	
 	public void testloop() 
 	{
@@ -82,7 +96,7 @@ public class PiMain {
 		Packet packet = new Packet(true, 63.415763, 10.406500, true, false, Integer.toString(licencePlate));
 		try
 		{
-			socket = new Socket("localhost",6666);
+			socket = new Socket(serverIP,6666);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(packet);
 			System.out.println("Sending packet");
