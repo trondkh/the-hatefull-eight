@@ -10,6 +10,7 @@ public class Packet implements Serializable{
 	private boolean isRequest, isReport;
 	private int numberOfAirbags, numberOfSlipperies;
 	private double longitude, latitude;
+	private boolean airbagDeployed, hasSlipped;
 	String licensePlate;
 	
 	
@@ -32,8 +33,8 @@ public class Packet implements Serializable{
 		this.isReport = isReport;
 		this.longitude = longitude;
 		this.latitude = latitude;
-		if(hasAirbag) numberOfAirbags = 1;
-		if(hasSlipped) numberOfAirbags = 1;
+		this.airbagDeployed = hasAirbag;
+		this.hasSlipped = hasSlipped;
 		roadData = null;
 		coordinates = null;
 		weatherData = null;
@@ -84,6 +85,8 @@ public class Packet implements Serializable{
 	public int getAirbags() { return this.numberOfAirbags; }
 	public int getSlips() { return this.numberOfSlipperies; }
 	public String getRoadCondition() { return this.roadData; }
+	public boolean airbagDeployed() { return this.airbagDeployed; }
+	public boolean hasSlipped() { return this.hasSlipped; }
 	
 	
 }

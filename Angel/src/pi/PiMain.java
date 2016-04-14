@@ -24,40 +24,6 @@ public class PiMain {
 	ArrayList<Double> latitude = new ArrayList<Double>();
 	ArrayList<Double> longditude = new ArrayList<Double>();
 	
-	void readShit()
-	{
-		ArrayList<String> allTheLines = new ArrayList<String>();
-		Reader r;
-		try
-		{
-			r = new FileReader("./Angel/src/pi/uptown-west.json");
-			BufferedReader br = new BufferedReader(r);
-			String str;
-			while((str = br.readLine())!=null)
-			{
-				allTheLines.add(str);
-			}
-			br.close();
-			
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		String[] strings = new String[3];
-		String str;
-		for(int i=0;i<100;i++)
-		{
-			str = Integer.toString(i) + " ";
-			str += allTheLines.get(i);
-			System.out.println(str);
-			strings = str.split(","); 
-			str += strings[0].split(":")[1];
-			str += " at "; 
-			str += strings[1].split(":")[1];
-//			System.out.println(str);
-		}
-	}
 	
 	public static void main(String[] args) {
 		PiMain p = new PiMain(args);
@@ -81,6 +47,11 @@ public class PiMain {
 			this.serverIP = "localhost";
 //			this.serverIP = "192.168.1.102";
 		}
+		
+		DemoCoordinateGenerator dcg = new DemoCoordinateGenerator();
+		this.latitude = dcg.getLatitude();
+		this.longditude = dcg.getLongditude();
+		this.random = new Random();
 	}
 	
 	public void loop() {
@@ -98,7 +69,7 @@ public class PiMain {
 	}
 	public void driveCar() {
 		packet = new Packet(true, latitude.get(teller), longditude.get(teller), getRandomBoolean(), getRandomBoolean(), licencePlate);
-		if(teller < latitude.size()){
+		if(teller < (latitude.size()-1)){
 			teller ++;
 		}
 		else{
@@ -138,4 +109,39 @@ public class PiMain {
     public boolean getRandomBoolean() {
         return random.nextBoolean();
     }
+
+	void readShit()
+	{
+		ArrayList<String> allTheLines = new ArrayList<String>();
+		Reader r;
+		try
+		{
+			r = new FileReader("./Angel/src/pi/uptown-west.json");
+			BufferedReader br = new BufferedReader(r);
+			String str;
+			while((str = br.readLine())!=null)
+			{
+				allTheLines.add(str);
+			}
+			br.close();
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		String[] strings = new String[3];
+		String str;
+		for(int i=0;i<100;i++)
+		{
+			str = Integer.toString(i) + " ";
+			str += allTheLines.get(i);
+			System.out.println(str);
+			strings = str.split(","); 
+			str += strings[0].split(":")[1];
+			str += " at "; 
+			str += strings[1].split(":")[1];
+//			System.out.println(str);
+		}
+	}
 }

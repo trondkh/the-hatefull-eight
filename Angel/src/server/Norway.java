@@ -468,6 +468,7 @@ private void addKommuner()
 		this.kommuner.add("Åmli");
 		this.kommuner.add("Iveland");
 		this.kommuner.add("Evje og Hornnes");
+		this.kommuner.add("Evje");
 		this.kommuner.add("Bygland");
 		this.kommuner.add("Valle");
 		this.kommuner.add("Bykle");

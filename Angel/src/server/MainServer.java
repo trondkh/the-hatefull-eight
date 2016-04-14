@@ -65,7 +65,8 @@ public class MainServer {
 	private void getNewCar(Packet packet){
 		String kommune = getKommune(packet.getLatitude(),packet.getLongitude());
 		k = norwayDict.get(kommune);
-		k.updateWithCarData(new CarData("bla bla", true, false, packet.getLicensePlate()));
+		System.out.println(k.getName());
+		k.updateWithCarData(new CarData("Message", packet.hasSlipped(), packet.airbagDeployed(), packet.getLicensePlate()));
 		printAreasWithCars();
 	}
 	
