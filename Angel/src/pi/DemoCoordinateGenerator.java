@@ -40,10 +40,20 @@ public class DemoCoordinateGenerator {
 		ArrayList<Double> t1,t2;
 		t1 = this.getLatitude();
 		t2 = this.getLongditude();
+		System.out.println("The fixed locations are:");
 		for(int i=0;i<t1.size();i++)
 		{
 			System.out.println(t1.get(i) + " " + t2.get(i));
 		}
+		System.out.println(" The interpolated locations are:");
+		t1 = new ArrayList<Double>();
+		t2 = new ArrayList<Double>();
+		this.calculateCoordinates(2, t1, t2);
+		for(int i=0;i<t1.size();i++)
+		{
+			System.out.println(t1.get(i) + " " + t2.get(i));
+		}
+
 	}
 	
 	public void init()
@@ -89,23 +99,31 @@ public class DemoCoordinateGenerator {
 		return retVal;
 	}
 
-	private void calculateCoordinates(int points)
+	private void calculateCoordinates(int points, ArrayList<Double> latitudes, ArrayList<Double> longditudes)
 	{
-		ArrayList<Double> latitudes = new ArrayList<Double>();
-		ArrayList<Double> longditudes = new ArrayList<Double>();
 		int indexUpper = fixedPoints.size()-1;
-		for(int i=1;i<indexUpper;i++)
+		double latFrom,latTo,lonFrom,lonTo;
+		for(int i=0;i<indexUpper;i++)
 		{
-			
+			latFrom = fixedPoints.get(i).latiture;
+			latTo = fixedPoints.get(i+1).latiture;
+			lonFrom = fixedPoints.get(i).longditude;
+			lonTo = fixedPoints.get(i+1).longditude;
+			insertCoordinates(latitudes, latFrom, latTo, points);
+			insertCoordinates(longditudes, lonFrom, lonTo, points);
 		}
+
+		latitudes.add(fixedPoints.get(indexUpper).latiture);
+		longditudes.add(fixedPoints.get(indexUpper).longditude);
 		
 	}
 	
 	private void insertCoordinates(ArrayList<Double> coordinates, double from, double to, int points)
 	{
-		double delta = (to-from)/(double)points;
+		double delta = (to-from)/((double)points);
 		double newVal = from;
-		for(int i=0;i<points;i++)
+		coordinates.add(new Double(newVal));
+		for(int i=0;i<(points-1);i++)
 		{
 			newVal+=delta;
 			coordinates.add(new Double(newVal));
