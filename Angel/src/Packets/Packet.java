@@ -1,4 +1,4 @@
-﻿package Packets;
+package Packets;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +16,8 @@ public class Packet implements Serializable{
 	
 	public Packet(ArrayList<String> weatherData, int numberOfAirbags, int numberOfSlipperies, String roadData) {
 		this.weatherData = weatherData;
-		this.roadData = roadData;
+		String[] temp = roadData.split(",");
+		this.roadData = temp[0];
 		this.numberOfAirbags = numberOfAirbags;
 		this.numberOfSlipperies = numberOfSlipperies;
 		isRequest = false;
