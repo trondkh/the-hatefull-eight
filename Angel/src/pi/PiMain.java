@@ -20,6 +20,7 @@ public class PiMain {
 	Packet packet = new Packet(true, 63.415763, 10.406500, true, false, licencePlate);
 	int teller = 0;
 	private Random random;
+	ArduinoCom arduino;
 	
 	ArrayList<Double> latitude = new ArrayList<Double>();
 	ArrayList<Double> longditude = new ArrayList<Double>();
@@ -52,6 +53,7 @@ public class PiMain {
 		this.latitude = dcg.getLatitude();
 		this.longditude = dcg.getLongditude();
 		this.random = new Random();
+		arduino = new ArduinoCom();
 	}
 	
 	public void loop() {
@@ -104,6 +106,27 @@ public class PiMain {
 		String str = "Airbags: " + packet.getAirbags() + " Slippness: " + packet.getSlips();
 		str+= " and current road condition: " + packet.getRoadCondition() + "\n";
 		System.out.println(str);
+		printToArduino(packet);
+	}
+	
+	public void printToArduino(Packet packet)
+	{
+		String allOk = "No problems     Road is clear   ";
+		String accident = "Accident ahead  Drive carefully";
+		String accidents = "Several accidents";
+		if(packet.getAirbags()<=0)
+		{
+			arduino.sendString(allOk);
+		}
+		else if(packet.getAirbags()==1)
+		{
+			arduino.sendString(accident);
+		}
+		else
+		{
+			arduino.sendString(accidents);
+		}
+			
 	}
 
     public boolean getRandomBoolean() {
