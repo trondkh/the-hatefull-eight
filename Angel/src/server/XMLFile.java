@@ -160,6 +160,7 @@ public class XMLFile {
 			startIndex = i + 1;
 			if(tag.charAt(i) != ' ' && tag.charAt(i) == '<') break;
 		}
+		
 		tag = tag.substring(startIndex, tag.length() - 1);
 		
 		//Checks if tag is self contained
