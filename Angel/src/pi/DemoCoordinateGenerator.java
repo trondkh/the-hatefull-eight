@@ -99,7 +99,7 @@ public class DemoCoordinateGenerator {
 		return retVal;
 	}
 
-	private void calculateCoordinates(int points, ArrayList<Double> latitudes, ArrayList<Double> longditudes)
+	void calculateCoordinates(int points, ArrayList<Double> latitudes, ArrayList<Double> longditudes)
 	{
 		int indexUpper = fixedPoints.size()-1;
 		double latFrom,latTo,lonFrom,lonTo;

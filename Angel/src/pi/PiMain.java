@@ -52,6 +52,7 @@ public class PiMain {
 		DemoCoordinateGenerator dcg = new DemoCoordinateGenerator();
 		this.latitude = dcg.getLatitude();
 		this.longditude = dcg.getLongditude();
+		dcg.calculateCoordinates(10, this.latitude, this.longditude);
 		this.random = new Random();
 		arduino = new ArduinoCom();
 	}
@@ -66,7 +67,7 @@ public class PiMain {
 			driveCar();
 			SendData();
 			Packet packet = RecvData();
-			testPrintPacket(packet);
+			printPacket(packet);
 		}
 	}
 	public void driveCar() {
@@ -102,7 +103,7 @@ public class PiMain {
 		return packet;
 	}
 	
-	public void testPrintPacket(Packet packet) {
+	public void printPacket(Packet packet) {
 		String str = "Airbags: " + packet.getAirbags() + " Slippness: " + packet.getSlips();
 		str+= " and current road condition: " + packet.getRoadCondition() + "\n";
 		System.out.println(str);
@@ -133,38 +134,5 @@ public class PiMain {
         return random.nextBoolean();
     }
 
-	void readShit()
-	{
-		ArrayList<String> allTheLines = new ArrayList<String>();
-		Reader r;
-		try
-		{
-			r = new FileReader("./Angel/src/pi/uptown-west.json");
-			BufferedReader br = new BufferedReader(r);
-			String str;
-			while((str = br.readLine())!=null)
-			{
-				allTheLines.add(str);
-			}
-			br.close();
-			
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		String[] strings = new String[3];
-		String str;
-		for(int i=0;i<100;i++)
-		{
-			str = Integer.toString(i) + " ";
-			str += allTheLines.get(i);
-			System.out.println(str);
-			strings = str.split(","); 
-			str += strings[0].split(":")[1];
-			str += " at "; 
-			str += strings[1].split(":")[1];
-//			System.out.println(str);
-		}
-	}
+	
 }

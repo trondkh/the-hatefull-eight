@@ -51,7 +51,7 @@ public class MainServer {
 
 	private String getKommune(double latitude, double longditude){
 		CoordinateHandler city = new CoordinateHandler(latitude, longditude); 
-		return city.getCityName();
+		return city.getCountyName();
 	}
 	
 	private void printAreasWithCars(){
