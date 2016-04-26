@@ -40,7 +40,7 @@ public class CoordinateHandler {
 		municipaltyName = location.getText(location.getTagChildren(addressComponents.get(parents[2])).get(0));
 		cityName = location.getText(location.getTagChildren(addressComponents.get(parents[3])).get(0));
 		
-		System.out.println(countryName + ", " + countyName + ", " + municipaltyName + ", " + cityName);
+		//System.out.println(countryName + ", " + countyName + ", " + municipaltyName + ", " + cityName);
 		complete = true;
 	}
 	
@@ -49,7 +49,7 @@ public class CoordinateHandler {
 			System.err.println("Not able to generate link");
 			return "http://www.yr.no/sted/Norge/Sør-Trøndelag/Trondheim/Trondheim/varsel_time_for_time.xml";
 		}
-		return "http://www.yr.no/sted/" + countryName + "/" + countyName + "/" + municipaltyName + "/" + cityName + "/varsel_time_for_time.xml";
+		return "http://www.yr.no/sted/" + countryName.replace(' ', '_') + "/" + countyName.replace(' ', '_') + "/" + municipaltyName.replace(' ', '_') + "/" + cityName.replace(' ', '_') + "/varsel_time_for_time.xml";
 	}
 	
 	public String getCityName() {return cityName;}

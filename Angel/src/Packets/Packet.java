@@ -5,30 +5,13 @@ import java.util.ArrayList;
 
 public class Packet implements Serializable{
 	
-	private String roadData, coordinates;
-	private ArrayList<String> weatherData;
-	private boolean isRequest, isReport;
+	private String coordinates, licensePlate;
+	private ArrayList<String> weatherData, roadData;
+	private boolean isReport;
 	private int numberOfAirbags, numberOfSlipperies;
-	private double longitude, latitude;
+	private double longitude, latitude, mmOfPercipitation; 
 	private boolean airbagDeployed, hasSlipped;
-	String licensePlate;
 	
-	
-	public Packet(ArrayList<String> weatherData, int numberOfAirbags, int numberOfSlipperies, String roadData) {
-		this.weatherData = weatherData;
-		String[] temp = roadData.split(",");
-		this.roadData = temp[0];
-		this.numberOfAirbags = numberOfAirbags;
-		this.numberOfSlipperies = numberOfSlipperies;
-		isRequest = false;
-		isReport = false;
-	}
-	
-	public Packet(boolean isRequest, String coordinates) {
-		isReport = false;
-		this.isRequest = isRequest;
-		this.coordinates = coordinates;
-	}
 	
 	public Packet(boolean isReport, double latitude, double longitude, boolean hasAirbag, boolean hasSlipped, String licensePlate) {
 		this.isReport = isReport;
@@ -43,12 +26,22 @@ public class Packet implements Serializable{
 	}
 	
 	
+	public Packet(ArrayList<String> weatherData, int numberOfAirbags, int numberOfSlipperies, ArrayList<String> roadData) {
+		this.weatherData = weatherData;
+		if(weatherData.size() > 0) try{mmOfPercipitation = Double.parseDouble(weatherData.get(0));} catch(NumberFormatException e) {e.printStackTrace();}
+		this.roadData = roadData;
+		this.numberOfAirbags = numberOfAirbags;
+		this.numberOfSlipperies = numberOfSlipperies;
+		isReport = false;
+	}
+	
+	
 	public String getCoordinates() {
 		return coordinates;
 	}
 	
 	public String toString() {
-		if(isRequest) return coordinates;
+		if(isReport) return coordinates;
 		String str = "WEATHER: \n";
 		//str += weatherData + "\n";
 		str += displayYr(weatherData) + " \n\n";
@@ -65,17 +58,23 @@ public class Packet implements Serializable{
 	}
 	
 	public String displayYr(ArrayList<String> str) {
-		if(str == null) return "No data for weather";
+		if(str == null || str.size() == 0) return "No data for weather";
 		String temp = "";
-		temp += "Temperatur på " + str.get(0) + " " + str.get(1) + "\n";
+		/*temp += "Temperatur på " + str.get(0) + " " + str.get(1) + "\n";
 		temp += str.get(2) + " på " + str.get(3) + " grader \n";
-		temp += "Lufttrykk på " + str.get(4) + " " + str.get(5);
+		temp += "Lufttrykk på " + str.get(4) + " " + str.get(5);*/
+		
+		temp = mmOfPercipitation + " mm percipitation";
 		
 		return temp;
 	}
 	
-	public String displayVegvesen(String str) {
-		String temp = str;
+	public String displayVegvesen(ArrayList<String> str) {
+		if(str == null || str.size() == 0) return "No road messages";
+		
+		String temp = "";
+		for(int i = 0; i < str.size(); i++) temp += str.get(i) + " er stengt\n";
+		
 		return temp;
 	}
 	
@@ -85,7 +84,7 @@ public class Packet implements Serializable{
 	public String getLicensePlate() { return this.licensePlate; }
 	public int getAirbags() { return this.numberOfAirbags; }
 	public int getSlips() { return this.numberOfSlipperies; }
-	public String getRoadCondition() { return this.roadData; }
+	public ArrayList<String> getRoadCondition() { return this.roadData; }
 	public boolean airbagDeployed() { return this.airbagDeployed; }
 	public boolean hasSlipped() { return this.hasSlipped; }
 	

@@ -83,6 +83,9 @@ public class MainServer {
 			}
 		}
 
-		return new Packet(new ArrayList<String>(), numAirbag, icy, "Road is fine");
+		ArrayList<String> weatherData = new ArrayList<String>();
+		ArrayList<String> roadData = new ArrayList<String>();
+		roadData.add("Road is fine");
+		return new Packet(weatherData, numAirbag, icy, roadData);
 	}
 }

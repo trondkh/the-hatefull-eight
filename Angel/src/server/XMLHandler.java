@@ -1,11 +1,11 @@
 package server;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class XMLHandler {
 	
-	@SuppressWarnings("unused")
 	private XMLFile yr, vegvesen;
 	@SuppressWarnings("unused")
 	private CoordinateHandler location;
@@ -66,7 +66,7 @@ public class XMLHandler {
 	}
 	
 	public ArrayList<String> requestYr(int[] times, ArrayList<String> tags, ArrayList<String> values) {
-		System.out.println("Requesting...");
+		//System.out.println("Requesting...");
 		ArrayList<String> temp = new ArrayList<String>();
 		int requestLength = Math.min(tags.size(), values.size());
 		
@@ -83,6 +83,7 @@ public class XMLHandler {
 		}
 		
 		ArrayList<Integer> timeSubParts = yr.getTagChildren(indexOfTime);
+		if(timeSubParts == null) return null;
 		
 		for(int i2 = 0; i2 < requestLength; i2++) {
 			for(int i = 0; i < timeSubParts.size(); i++) {
@@ -94,7 +95,7 @@ public class XMLHandler {
 		}
 		
 		
-		System.out.println("------Recieved " + temp.size() + " results--------");
+		//System.out.println("------Recieved " + temp.size() + " results--------");
 		return temp;
 	}
 	
@@ -140,12 +141,21 @@ public class XMLHandler {
 		
 		for(int i = 0; i < startPositions.size(); i++) {
 			ArrayList<Integer> children = vegvesen.getTagChildren(startPositions.get(i));
+			//vegvesen.printTag(children.get(0));
 			
-			double x = Double.parseDouble(vegvesen.getText(children.get(0)));
-			double y = Double.parseDouble(vegvesen.getText(children.get(1)));
+			double x = 0;
+			double y = 0;
+			
+			try {
+				x = Double.parseDouble(vegvesen.getText(children.get(0)));
+				y = Double.parseDouble(vegvesen.getText(children.get(1)));
+			} catch(Exception e) {
+				continue;
+			}
+			
 			
 			double distance = Math.sqrt(Math.pow(x - lon, 2) + Math.pow(y - lat, 2));
-			
+			threshold = 4;
 			if(distance > threshold) continue;
 			
 			for(int i2 = 0; i2 < messages.size(); i2++) {

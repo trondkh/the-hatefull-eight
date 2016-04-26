@@ -7,12 +7,16 @@ public class ArduinoCom {
 		
 		SerialPort chosenPort;
 		SerialPort[] portNames;
+		boolean connectionOk = false;
 
 		public ArduinoCom()
 		{
 			portNames = SerialPort.getCommPorts();
-			chosenPort = SerialPort.getCommPort(portNames[0].getSystemPortName());
-			init();
+			if(portNames.length>=1)
+			{
+				chosenPort = SerialPort.getCommPort(portNames[0].getSystemPortName());
+				init();
+			}
 		}
 		
 		public ArduinoCom(String comPort)
@@ -24,32 +28,33 @@ public class ArduinoCom {
 		public void init()
 		{
 			chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
+			connectionOk = true;
 		}
 		
 		public void sendString(String msg)
 		{
-			if(chosenPort.openPort())
+			if(connectionOk)
 			{
-				// create a new thread for sending data to the arduino
-				Thread thread = new Thread()
+				if(chosenPort.openPort())
 				{
-					@Override 
-					public void run()
+					Thread thread = new Thread()
 					{
-						// wait after connecting, so the bootloader can finish
-						try {Thread.sleep(100); } catch(Exception e) {}
-
-						// enter an infinite loop that sends text to the arduino
-						PrintWriter output = new PrintWriter(chosenPort.getOutputStream());
-						output.print(msg);
-						output.flush();
-					}
-				};
-				thread.start();
-			}
-			else 
-			{
-				chosenPort.closePort();
+						@Override 
+						public void run()
+						{
+							try {Thread.sleep(100); } catch(Exception e) {}
+							
+							PrintWriter output = new PrintWriter(chosenPort.getOutputStream());
+							output.print(msg);
+							output.flush();
+						}
+					};
+					thread.start();
+				}
+				else 
+				{
+					chosenPort.closePort();
+				}
 			}
 		}
 		
