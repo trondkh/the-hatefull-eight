@@ -64,6 +64,7 @@ private void addFylker()
 
 private void addKommuner()
 {
+		this.kommuner.add("unknown");
 		this.kommuner.add("Halden");
 		this.kommuner.add("Halden");
 		this.kommuner.add("Moss");

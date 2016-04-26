@@ -1,6 +1,7 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import Packets.Packet;
@@ -38,7 +39,8 @@ public class MainServer {
 			Packet packet= createCarPackage();
 			listener.sendCarData(packet);
 			listener.close();
-			deleteOldCars(15);
+			deleteOldCars(300);
+			printAreasWithCars(25);
 		}
 	}
 	
@@ -54,27 +56,43 @@ public class MainServer {
 		return city.getMunicipaltyName();
 	}
 	
-	private void printAreasWithCars(){
-		for(GeographicalArea a:norwayDict.values()){
-			if(a.numberOfCarsInArea()>0){
-				System.out.println(a.toString());
+	int t0 = 0;
+	private void printAreasWithCars(int secBetweenOutput){
+
+		if((Math.abs(getSeconds())-t0)>secBetweenOutput)
+		{
+			System.out.println("Cars currently in server:");
+			for(GeographicalArea a:norwayDict.values()){
+				if(a.numberOfCarsInArea()>0){
+					System.out.print(a.toString());
+				}
 			}
+			t0 = getSeconds();
 		}
 	}
-	
+
+	public int getSeconds()
+	{
+		return ((int)(Calendar.getInstance().getTimeInMillis())/1000);
+	}
+
 	private void getNewCar(Packet packet){
 		String kommune = getKommune(packet.getLatitude(),packet.getLongitude());
+		if(kommune==null)
+		{
+			kommune = "unknown";
+			System.out.println("Location not found at: " + packet.getLatitude() + " " + packet.getLongitude() + ":" + kommune);
+		}
 		k = norwayDict.get(kommune);
 		if(k!=null)
 		{
-			System.out.println(k.getName());
+			System.out.println("New car added to: " + k.getName());
 			k.updateWithCarData(new CarData("Message", packet.hasSlipped(), packet.airbagDeployed(), packet.getLicensePlate()));
 		}
 		else
 		{
 			System.out.println("Location not found at: " + packet.getLatitude() + " " + packet.getLongitude() + ":" + kommune);
 		}
-		printAreasWithCars();
 	}
 	
 	private Packet createCarPackage(){

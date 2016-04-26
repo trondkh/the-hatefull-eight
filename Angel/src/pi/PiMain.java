@@ -40,6 +40,9 @@ public class PiMain {
 		this.random = new Random();
 		arduino = new ArduinoCom();
 		serverCom = new TcpCom(args);
+		Random random = new Random();
+		Integer plateNumber = new Integer(random.nextInt(99999));
+		this.licencePlate = "XY" + plateNumber.toString(); 
 	}
 	
 	public void loop() {

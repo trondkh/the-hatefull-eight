@@ -53,7 +53,6 @@ public class GeographicalArea {
 	
 	public void updateWithCarData(CarData cd)
 	{
-		System.out.println("Car in " + this.countyName + " with plate " + cd.getLicensePlate());
 		for(CarData c : cars){
 			if(c.isThisLicensePlate(cd.getLicensePlate())){
 				cars.remove(c);
@@ -94,12 +93,11 @@ public class GeographicalArea {
 	public String toString()
 	{
 		String retVal = new String("");
-		retVal+= this.countyName + " has the following cars:\n";
+		retVal+= this.countyName;
 		for(CarData cd:cars)
 		{
-			retVal += cd.toString() + "\n";
+			retVal += "\n" + cd.toString();
 		}
-		retVal += "end of " + this.countyName + "\n-----\n\n";
 		return retVal;
 	}
 }
