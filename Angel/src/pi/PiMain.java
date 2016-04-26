@@ -15,12 +15,12 @@ import java.util.Random;
 
 public class PiMain {
 	
-	String serverIP;
 	String licencePlate = "CD49873";
 	Packet packet = new Packet(true, 63.415763, 10.406500, true, false, licencePlate);
 	int teller = 0;
 	private Random random;
 	ArduinoCom arduino;
+	TcpCom serverCom;
 	
 	ArrayList<Double> latitude = new ArrayList<Double>();
 	ArrayList<Double> longditude = new ArrayList<Double>();
@@ -28,33 +28,18 @@ public class PiMain {
 	
 	public static void main(String[] args) {
 		PiMain p = new PiMain(args);
-//		p.readShit();
 		p.loop();
 	}
 
-	ServerSocket serverSocket;
-	Socket socket;
-	
-	
-	
 	public PiMain(String[] args)
 	{
-		if(args.length==1)
-		{
-			this.serverIP = args[0];
-		}
-		else
-		{
-			this.serverIP = "localhost";
-//			this.serverIP = "192.168.1.102";
-		}
-		
 		DemoCoordinateGenerator dcg = new DemoCoordinateGenerator();
 		this.latitude = dcg.getLatitude();
 		this.longditude = dcg.getLongditude();
 		dcg.calculateCoordinates(10, this.latitude, this.longditude);
 		this.random = new Random();
 		arduino = new ArduinoCom();
+		serverCom = new TcpCom(args);
 	}
 	
 	public void loop() {
@@ -65,8 +50,8 @@ public class PiMain {
 				e.printStackTrace();
 			}
 			driveCar();
-			SendData();
-			Packet packet = RecvData();
+			serverCom.sendPacket(packet);
+			Packet packet = serverCom.recievePacket();
 			printPacket(packet);
 		}
 	}
@@ -78,29 +63,6 @@ public class PiMain {
 		else{
 			teller = 0;
 		}
-	}
-	
-	public void SendData() {
-		try{
-			socket = new Socket("localhost",6666);
-			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-			oos.writeObject(packet);
-			System.out.println("Sending packet");
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public Packet RecvData() {
-		Packet packet = null;
-		try{
-			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-			packet = (Packet)ois.readObject();
-		} catch (ClassNotFoundException | IOException e){
-			e.printStackTrace();
-		}
-		return packet;
 	}
 	
 	public void printPacket(Packet packet) {

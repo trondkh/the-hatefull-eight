@@ -51,7 +51,7 @@ public class MainServer {
 
 	private String getKommune(double latitude, double longditude){
 		CoordinateHandler city = new CoordinateHandler(latitude, longditude); 
-		return city.getCountyName();
+		return city.getMunicipaltyName();
 	}
 	
 	private void printAreasWithCars(){
@@ -65,8 +65,15 @@ public class MainServer {
 	private void getNewCar(Packet packet){
 		String kommune = getKommune(packet.getLatitude(),packet.getLongitude());
 		k = norwayDict.get(kommune);
-		System.out.println(k.getName());
-		k.updateWithCarData(new CarData("Message", packet.hasSlipped(), packet.airbagDeployed(), packet.getLicensePlate()));
+		if(k!=null)
+		{
+			System.out.println(k.getName());
+			k.updateWithCarData(new CarData("Message", packet.hasSlipped(), packet.airbagDeployed(), packet.getLicensePlate()));
+		}
+		else
+		{
+			System.out.println("Location not found at: " + packet.getLatitude() + " " + packet.getLongitude() + ":" + kommune);
+		}
 		printAreasWithCars();
 	}
 	
